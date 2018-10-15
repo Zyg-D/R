@@ -22,3 +22,22 @@
     install.packages("devtools")  # if not already installed
     library(devtools)
     install_git("https://github.com/ccolonescu/PoEdata")
+
+**Nice correlogram**
+
+    library(psych)
+    my_cor3 = corr.test(the_file, method = 'pearson')
+    corrplot(my_cor3$r, 
+             method = "color", 
+             col = colorRampPalette(c("#BB4444", "#EE9988", "#FFFFFF", "#77AADD", "#4477AA"))(200), 
+             type = "upper", 
+             order = "hclust", 
+             addCoef.col = "black", # Add coefficient of correlation
+             tl.col = "black", #Text label color
+             tl.srt = 45, #Text label rotation
+             # Combine with significance
+             p.mat = my_cor3$r, 
+             sig.level = 0.05, 
+             insig = "blank", 
+             diag = FALSE) # hide correlation coefficient on the principal diagonal
+
