@@ -41,3 +41,13 @@
              insig = "blank", 
              diag = FALSE) # hide correlation coefficient on the principal diagonal
 
+**Correlation matrix alternatives**
+
+    my_cor1 = cor(the_file, method = "pearson")
+    
+    library(Hmisc)
+    my_cor2 = rcorr(the_file$col_1, my_file$col_2, type = 'pearson')
+    
+    library(psych)
+    my_cor3 = corr.test(the_file, method = 'pearson')
+
