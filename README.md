@@ -9,6 +9,10 @@ Dataset[order(Dataset$Age),]   #asc
 ```r
 numDataset = Dataset[,sapply(Dataset, is.numeric)]
 ```
+**remove cols by col number (find them by `colnames(data1)`)**
+```r
+data2 = data1[-(2:4)]
+```
 **creating a data frame obj**
 ```r
 fakeddf = data.frame(col1 = c("c1", "c2"),
