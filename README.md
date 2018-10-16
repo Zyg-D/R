@@ -13,6 +13,10 @@ numDataset = Dataset[,sapply(Dataset, is.numeric)]
 ```r
 data2 = data1[-(2:4)]
 ```
+**remove rows containing NAs**
+```r
+data = data[!is.na(data$Embarked),]
+```
 **Graphically shows differences between R objects**
 ```r
 library(diffobj)
