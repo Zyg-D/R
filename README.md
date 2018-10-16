@@ -13,6 +13,11 @@ numDataset = Dataset[,sapply(Dataset, is.numeric)]
 ```r
 data2 = data1[-(2:4)]
 ```
+**Graphically shows differences between R objects**
+```r
+library(diffobj)
+diffPrint(obj1, obj2)
+```
 **creating a data frame obj**
 ```r
 fakeddf = data.frame(col1 = c("c1", "c2"),
