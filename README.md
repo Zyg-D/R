@@ -54,7 +54,7 @@ corrplot(my_cor3$r,
          insig = "blank", 
          diag = FALSE) # hide correlation coefficient on the principal diagonal
 ```
-this one also looks nice:
+this one looks nice too:
 ```r
 #devtools::install_github("kassambara/ggcorrplot")
 library(ggplot2)
