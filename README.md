@@ -9,6 +9,11 @@ Dataset[order(Dataset$Age),]   #asc
 ```r
 numDataset = Dataset[,sapply(Dataset, is.numeric)]
 ```
+**extracting values from named num/int type of array**
+```r
+Variable_name["col_name"]
+Variable_name[["col_name"]]
+```
 **remove cols by col number (find them by `colnames(data1)`)**
 ```r
 data2 = data1[-(2:4)]
