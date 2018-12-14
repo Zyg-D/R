@@ -23,8 +23,9 @@ data2 = data1[-(2:4)]
 data = data[!is.na(data$Embarked),]
 ```
 **Referencing data frame cols by number**  
-`dataset$colName` is equivalent to `dataset[11][,]`  
-**t-test**
+`dataset$colName` is equivalent to `dataset[11][,]`
+
+**Two-sample t-test**
 ```r
 t.test(dataset$continuousVarb~dataset$categoricVarb, 
        data = bussub, 
