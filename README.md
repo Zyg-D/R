@@ -22,7 +22,7 @@ data2 = data1[-(2:4)]
 ```r
 data = data[!is.na(data$Embarked),]
 ```
-**Referencing data frame cols by number**
+**Referencing data frame cols by number**  
 `dataset$colName` is equivalent to `dataset[11][,]`  
 **t-test**
 ```r
