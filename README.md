@@ -52,6 +52,12 @@ data.xtabs = xtabs(colToSum~colCategory1+colCategory2,data = dataset)
 fisher.test(data.xtabs,
             alternative="two.sided")
 ```
+**G-test of independence**
+```r
+library(RVAideMemoire)
+data.xtabs = xtabs(colToSum~colCategory1+colCategory2,data = dataset)
+G.test(data.xtabs)
+```
 **Graphically shows differences between R objects**
 ```r
 library(diffobj)
