@@ -36,6 +36,12 @@ t.test(dataset$continuousVarb~dataset$categoricVarb,
 ```r
 anova(lm(dataset[5][,]~dataset[11][,], data = bussub))
 ```
+**Two-sample K-S test**
+```r
+ks.test(subset1[15][,],
+        subset2[15][,],
+        alternative = "two.sided")
+```
 **Graphically shows differences between R objects**
 ```r
 library(diffobj)
