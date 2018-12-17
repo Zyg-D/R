@@ -46,6 +46,12 @@ ks.test(subset1[15][,],
 ```r
 kruskal.test(dataset$rankedVarb~dataset$categoricVarb, data = dataset)
 ```
+**Fisher's exact test of independence**
+```r
+data.xtabs = xtabs(colToSum~colCategory1+colCategory2,data = dataset)
+fisher.test(data.xtabs,
+            alternative="two.sided")
+```
 **Graphically shows differences between R objects**
 ```r
 library(diffobj)
