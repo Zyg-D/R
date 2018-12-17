@@ -28,7 +28,7 @@ data = data[!is.na(data$Embarked),]
 **Two-sample t-test**
 ```r
 t.test(dataset$continuousVarb~dataset$categoricVarb, 
-       data = bussub, 
+       data = dataset, 
        var.equal = TRUE, 
        alternative = "two.sided")
 ```
@@ -41,6 +41,10 @@ anova(lm(dataset[5][,]~dataset[11][,], data = bussub))
 ks.test(subset1[15][,],
         subset2[15][,],
         alternative = "two.sided")
+```
+**Kruskal-Wallis test**
+```r
+kruskal.test(dataset$rankedVarb~dataset$categoricVarb, data = dataset)
 ```
 **Graphically shows differences between R objects**
 ```r
