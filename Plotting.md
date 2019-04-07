@@ -16,13 +16,16 @@ likert(x=Question ~ . , data=ProfChal[ProfChal$Subtable=="Employment sector",]
       ,as.percent=TRUE
       ,positive.order=TRUE # surikiuoja barus nuo geriausio
       ,layout=c(1,1) # i kiek daliu padalinta lapo erdve, i kiek padalinta - (eilute, stulpelis). Naudinga rodant kelis grafikus, i kuriuos duomenys ateina is stulpelio "Subtable" per: x=Question ~ . | Subtable
-      #,resize.height=c(2,1) # kokius santykinius dydzius atitiks kiekvienas is layout 2 parametro elementu
+      #,resize.height=c(2,1) # kokius santykinius dydzius atitiks kiekvienas is layout 2 parametro elementu, galima rasyti ir ="rowSums"
       #,resize.width=c(3,4) # kokius santykinius dydzius atitiks kiekvienas is layout 1 parametro elementu
-      ,strip=T # ?
-      ,par.strip.text=list(cex=8.0) # ?
+      #,between=list(x=0.5,y=0.5) # kai yra layout padalinimai - atstumai tarp grafiku atitinkamose asyse
+      #,strip.left=strip.custom(bg="gray97") # kaireje, tarp ticks ir grafiko uzrasoma apibudinanti kategorija. Atrodo, patikimai veikia tik kai paduodama lentele (ne df) su skaitinem reiksmem abiejose asyse, e.g.: x=USAge.table[75:1, 2:1, c("1939","1959","1979")]
+      #,strip=strip.custom(bg="#00508C") # virsuje, tarp ticks ir grafiko uzrasoma apibudinanti kategorija. Atrodo, patikimai veikia tik kai paduodama lentele (ne df) su skaitinem reiksmem abiejose asyse, e.g.: x=USAge.table[75:1, 2:1, c("1939","1959","1979")]
+      #,par.strip.text=list(cex=0.6, lines=5) # langelio storumas ir font dydis, galiojantis ir strip, ir strip.left
       #,box.width=0.7 # bars storumas
       ,box.ratio=2.0 # bars storumas (isreikstas per santyki su gapu), panasu, kad neveikia, kai yra bars.width
       ,ylab="ylab tekstas" # tekstas kaireje puseje vertikaliai
+      #,rightAxis=TRUE # jeigu nerodo, galima ijungt count rodyma desineje puseje, aktualu kai nenaudojama as.percent
       ,ylab.right="ylab.rignt tekstas" # tekstas desineje puseje vertikaliai
       #,rightAxisLabels=c("a","b","c","d","e") # is desines puses prie kiekvieno bar galima prirasyti labels. Default rodo countus. Jeigu pakeiti per kitur pakeiti orderi, cia irgi tvarkingai auto pasikeicia
       ,BrewerPaletteName="RdBu" # ?
@@ -33,11 +36,15 @@ likert(x=Question ~ . , data=ProfChal[ProfChal$Subtable=="Employment sector",]
                          # labels seka - tai, kas matysis - siame pvz seka yra konstruojama, nes i kaire nuo 0 reikia be minuso
                          # jei reiktu %, tai naudojama, e.g., paste(seq(-60,100,10),'%',sep='')
                          ,labels=c(seq(50,0,-10),seq(10,300,10))
+                         ,limits=c(-30,100) # koki faktini X range talpina grafiko area. Dalis, kurios netalpina, iseina uz area ribu
                          ,cex=0.8 # font size of X axis labels
+                         ,tck=0.8 # ilgis bruksniuku virs grafiko ir po
+                         ,rot=c(0, 0) # pirmas parametras - kiek laipsniu pasuktas X labels tekstas
                          ,relation="free" # ="same"; "free" nuima tarpa virsuje po title
                          )
                   ,y=list(cex=0.8 # font size of bar labels (Y axis)
-                         ,relation="free" # ="same"; "free" nuima tarpa desineje puseje
+                         #,tck=0.9 # ilgis bruksniuku desineje ir kaireje (kaireje atsiranda, jeigu nebuvo)
+                         ,relation="free" # ="same"; "free" listina tik tuos klausimus, i kuriuos buvo atsakyta prie konkrecios kategorijos, nurodytos pvz taip: x=Question ~ . | Subtable. Subtable - kategoriju col. Taip pat nuima tarpa desineje puseje
                          )
                   )
       # legend
@@ -47,9 +54,15 @@ likert(x=Question ~ . , data=ProfChal[ProfChal$Subtable=="Employment sector",]
                     #,columns=5 # i kiek stulpeliu sudalinta
                     ,reverse=F # su mano duomenim neveikia, nors su docs pvz veikia
                     ,padding.text=1.3 # elementu aukstis
-                    ,between=0.3 # gap'as tarp spalvos langelio irs teksto
+                    ,between=0.3 # gap'as tarp spalvos langelio ir teksto
                     ,between.columns=2.5 # gap'as tarp kategoriju
                     )
       ,sub="" #tekstas pacioje apacioje
       )
+
+#When X labels are needed on top instead of bottom:
+tmph=likert(...)
+names(tmph$x.scales$labels) <- tmph$x.scales$labels
+update(tmph, scales=list(x=list(alternating=2)))
+
 ```
