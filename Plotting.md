@@ -20,6 +20,7 @@ likert(x=Question ~ . , data=ProfChal[ProfChal$Subtable=="Employment sector",]
       ,layout=c(1,1) # i kiek daliu padalinta lapo erdve, i kiek padalinta - (eilute, stulpelis). Naudinga rodant kelis grafikus, i kuriuos duomenys ateina is stulpelio "Subtable" per: x=Question ~ . | Subtable
       #,resize.height=c(2,1) # kokius santykinius dydzius atitiks kiekvienas is layout 2 parametro elementu, galima rasyti ir ="rowSums"
       #,resize.width=c(3,4) # kokius santykinius dydzius atitiks kiekvienas is layout 1 parametro elementu
+      #,h.resizePanels=rowSums(your_df[,1:4])  # resize'inimas per Named num vektoriu
       #,between=list(x=0.5,y=0.5) # kai yra layout padalinimai - atstumai tarp grafiku atitinkamose asyse
       #,strip.left=strip.custom(bg="gray97") # kaireje, tarp ticks ir grafiko uzrasoma apibudinanti kategorija. Atrodo, patikimai veikia tik kai paduodama lentele (ne df) su skaitinem reiksmem abiejose asyse, e.g.: x=USAge.table[75:1, 2:1, c("1939","1959","1979")]
       #,strip=strip.custom(bg="#00508C") # virsuje, tarp ticks ir grafiko uzrasoma apibudinanti kategorija. Atrodo, patikimai veikia tik kai paduodama lentele (ne df) su skaitinem reiksmem abiejose asyse, e.g.: x=USAge.table[75:1, 2:1, c("1939","1959","1979")]
@@ -29,7 +30,7 @@ likert(x=Question ~ . , data=ProfChal[ProfChal$Subtable=="Employment sector",]
       ,ylab="ylab tekstas" # tekstas kaireje puseje vertikaliai
       #,rightAxis=TRUE # jeigu nerodo, galima ijungt count rodyma desineje puseje, aktualu kai nenaudojama as.percent
       ,ylab.right="ylab.rignt tekstas" # tekstas desineje puseje vertikaliai
-      #,rightAxisLabels=c("a","b","c","d","e") # is desines puses prie kiekvieno bar galima prirasyti labels. Default rodo countus. Jeigu pakeiti per kitur pakeiti orderi, cia irgi tvarkingai auto pasikeicia
+      #,rightAxisLabels=c("a","b","c","d","e") # is desines puses prie kiekvieno bar galima prirasyti labels. Formatas reguliuojamas: =format(rowSums(PoorChildren[,1:4]), big.mark=",") . Jeigu pakeiti per kitur pakeiti orderi, cia irgi tvarkingai auto pasikeicia
       #,BrewerPaletteName="RdBu" # cia atrodo kazkas susije su spalvom, tai pasimatytu, jeigu jos nebutu parinktos konkrecios
       ,xlab="Percentage" # tekstas po X labels
       #,xlab.top="xlab.top tekstas" #uzdeda teksta virs grafiko, virs virsutiniu labels
@@ -40,12 +41,12 @@ likert(x=Question ~ . , data=ProfChal[ProfChal$Subtable=="Employment sector",]
                          ,labels=c(seq(50,0,-10),seq(10,300,10))
                          ,limits=c(-30,100) # koki faktini X range talpina grafiko area. Dalis, kurios netalpina, iseina uz area ribu
                          ,cex=0.8 # font size of X axis labels
-                         ,tck=0.8 # ilgis bruksniuku virs grafiko ir po
+                         #,tck=c(2.1,0.9) # ilgis bruksniuku (bottom,top)
                          ,rot=c(0, 0) # pirmas parametras - kiek laipsniu pasuktas X labels tekstas
                          ,relation="free" # ="same"; "free" nuima tarpa virsuje po title
                          )
                   ,y=list(cex=0.8 # font size of bar labels (Y axis)
-                         #,tck=0.9 # ilgis bruksniuku desineje ir kaireje (kaireje atsiranda, jeigu nebuvo)
+                         #,tck=c(2.1,0.9) # ilgis bruksniuku (left,right)
                          ,relation="free" # ="same"; "free" listina tik tuos klausimus, i kuriuos buvo atsakyta prie konkrecios kategorijos, nurodytos pvz taip: x=Question ~ . | Subtable. Subtable - kategoriju col. Taip pat nuima tarpa desineje puseje
                          )
                   )
@@ -63,10 +64,14 @@ likert(x=Question ~ . , data=ProfChal[ProfChal$Subtable=="Employment sector",]
                                             ,top.padding=0.1 # didinant, atsiranda atstumas VIRS grafiko
                                             ,key.axis.padding=3.5 # didinant, atsiranda atstumas tarp grafiko virsaus ir title, grafikas spaudziasi
                                             )
-                        ,layout.widths=list(right.padding=1.5 # didinant, atsiranda atstumas tarp DESINIO krasto ir grafiko (legenda desineje atsistumia kartu su grafiku)
-                                           ,left.padding=1.5 # didinant, atsiranda atstumas tarp KAIRIO krasto ir grafiko
+                        ,layout.widths=list(right.padding=1.5 # didinant, atsiranda atstumas tarp DESINIO krasto ir grafiko
+                                           #,ylab.right=1.5 # didinant atsiranda atstumas DESINEJE tarp ylab.right teksto ir grafiko
+                                           #,axis.key.padding=0.5 # atrodo tarsi tas pats
                                            ,key.right=1.4 # didinant, atsiranda atstumas tarp DESINEJE esancios legendos ir grafiko
+                                           ,left.padding=1.5 # didinant, atsiranda atstumas tarp KAIRIO krasto ir grafiko
+                                           #,ylab=2.5 # didinant atsiranda atstumas KAIREJE tarp ylab teksto ir grafiko
                                            )
+                        ,axis.line=list(col="black") # the color of outside borders and ticks, e.g.: "transparent"
                         )
       ,sub="" #tekstas pacioje apacioje
       )
