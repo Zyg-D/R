@@ -11,10 +11,12 @@ data(ProfChal)  ## ProfChal is a data.frame.
 likert(x=Question ~ . , data=ProfChal[ProfChal$Subtable=="Employment sector",]
       ,aspect=1.1 # grafiko lentos aukstis dalintas is plocio
       ,main='Is your job professionally challenging?' # title
+      ,ReferenceZero=3 # explicitly states the col number which is neutral. In case there is no neutral position, the reference is set like this: =2.5
       ,col=c("#E94E1B", "#F7AA4E", "#BEBEBE", "#6193CE", "#00508C") #colors
+      #,border="black" # border around and inside bars
       ,horizontal=T # bar direction
       ,as.percent=TRUE
-      ,positive.order=TRUE # surikiuoja barus nuo geriausio
+      ,positive.order=TRUE # surikiuoja barus nuo geriausio rezultato
       ,layout=c(1,1) # i kiek daliu padalinta lapo erdve, i kiek padalinta - (eilute, stulpelis). Naudinga rodant kelis grafikus, i kuriuos duomenys ateina is stulpelio "Subtable" per: x=Question ~ . | Subtable
       #,resize.height=c(2,1) # kokius santykinius dydzius atitiks kiekvienas is layout 2 parametro elementu, galima rasyti ir ="rowSums"
       #,resize.width=c(3,4) # kokius santykinius dydzius atitiks kiekvienas is layout 1 parametro elementu
@@ -28,7 +30,7 @@ likert(x=Question ~ . , data=ProfChal[ProfChal$Subtable=="Employment sector",]
       #,rightAxis=TRUE # jeigu nerodo, galima ijungt count rodyma desineje puseje, aktualu kai nenaudojama as.percent
       ,ylab.right="ylab.rignt tekstas" # tekstas desineje puseje vertikaliai
       #,rightAxisLabels=c("a","b","c","d","e") # is desines puses prie kiekvieno bar galima prirasyti labels. Default rodo countus. Jeigu pakeiti per kitur pakeiti orderi, cia irgi tvarkingai auto pasikeicia
-      ,BrewerPaletteName="RdBu" # ?
+      #,BrewerPaletteName="RdBu" # cia atrodo kazkas susije su spalvom, tai pasimatytu, jeigu jos nebutu parinktos konkrecios
       ,xlab="Percentage" # tekstas po X labels
       #,xlab.top="xlab.top tekstas" #uzdeda teksta virs grafiko, virs virsutiniu labels
       ,xlim=c(-30,100) # faktinis X asies range - susietas su grafiku (nuo,iki)
@@ -57,12 +59,20 @@ likert(x=Question ~ . , data=ProfChal[ProfChal$Subtable=="Employment sector",]
                     ,between=0.3 # gap'as tarp spalvos langelio ir teksto
                     ,between.columns=2.5 # gap'as tarp kategoriju
                     )
+      ,par.settings=list(layout.heights=list(bottom.padding=1.5 # didinant, atsiranda atstumas PO grafiku
+                                            ,top.padding=0.1 # didinant, atsiranda atstumas VIRS grafiko
+                                            ,key.axis.padding=3.5 # didinant, atsiranda atstumas tarp grafiko virsaus ir title, grafikas spaudziasi
+                                            )
+                        ,layout.widths=list(right.padding=1.5 # didinant, atsiranda atstumas tarp DESINIO krasto ir grafiko (legenda desineje atsistumia kartu su grafiku)
+                                           ,left.padding=1.5 # didinant, atsiranda atstumas tarp KAIRIO krasto ir grafiko
+                                           ,key.right=1.4 # didinant, atsiranda atstumas tarp DESINEJE esancios legendos ir grafiko
+                                           )
+                        )
       ,sub="" #tekstas pacioje apacioje
       )
 
-#When X labels are needed on top instead of bottom:
+# When X labels are needed on top instead of bottom:
 tmph=likert(...)
 names(tmph$x.scales$labels) <- tmph$x.scales$labels
 update(tmph, scales=list(x=list(alternating=2)))
-
 ```
