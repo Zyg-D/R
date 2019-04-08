@@ -46,6 +46,7 @@ likert(x=Question ~ . , data=ProfChal[ProfChal$Subtable=="Employment sector",]
                          ,relation="free" # ="same"; "free" nuima tarpa virsuje po title
                          )
                   ,y=list(cex=0.8 # font size of bar labels (Y axis)
+                         ,alternating=NULL # labels on Y axis (only if numeric?): 1=only left; 2=only right; 3=both
                          #,tck=c(2.1,0.9) # ilgis bruksniuku (left,right)
                          ,relation="free" # ="same"; "free" listina tik tuos klausimus, i kuriuos buvo atsakyta prie konkrecios kategorijos, nurodytos pvz taip: x=Question ~ . | Subtable. Subtable - kategoriju col. Taip pat nuima tarpa desineje puseje
                          )
