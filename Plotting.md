@@ -1,14 +1,46 @@
 **Gantt bar chart for Likert items**
 
 ```r
-require(grid)          # gal ir nereikia
-require(lattice)       # gal ir nereikia
-require(latticeExtra)  # gal ir nereikia
-require(HH)            # reikia
+require(HH)     # also loads: lattice, grid, latticeExtra
 
-data(ProfChal)  ## ProfChal is a data.frame.
+# funkcija naudojama, jeigu reikia procentiniu verciu ant grafiko, irasant panel=myPanelFunc
+myPanelFunc <- function(...){
+  panel.likert(...)
+  vals <- list(...)
+  DF <- data.frame(x=vals$x, y=vals$y, groups=vals$groups)
+  
+  ### some convoluted calculations here...
+  grps <- as.character(DF$groups)
+  for(i in 1:length(origNames)){
+    grps <- sub(paste0('^',origNames[i]),i,grps)
+  }
+  
+  DF <- DF[order(DF$y,grps),]
+  
+  DF$correctX <- ave(DF$x,DF$y,FUN=function(x){
+    x[x < 0] <- rev(cumsum(rev(x[x < 0]))) - x[x < 0]/2
+    x[x > 0] <- cumsum(x[x > 0]) - x[x > 0]/2
+    return(x)
+  })
+  
+  subs <- sub(' Positive$','',DF$groups)
+  collapse <- subs[-1] == subs[-length(subs)] & DF$y[-1] == DF$y[-length(DF$y)]
+  DF$abs <- abs(DF$x)
+  DF$abs[c(collapse,FALSE)] <- DF$abs[c(collapse,FALSE)] + DF$abs[c(FALSE,collapse)]
+  DF$correctX[c(collapse,FALSE)] <- 0
+  DF <- DF[c(TRUE,!collapse),]
+  
+  DF$perc <- ave(DF$abs,DF$y,FUN=function(x){x/sum(x) * 100})
+  ###
+  
+  panel.text(x=DF$correctX, y=DF$y, label=paste0(round(DF$perc,1),'%'), cex=0.7)
+}
 
-likert(x=Question ~ . , data=ProfChal[ProfChal$Subtable=="Employment sector",]
+data(ProfChal)
+myData = ProfChal
+rm(ProfChal)
+origNames = colnames(myData) # required for myPanelFunc
+likert(x=Question ~ . , data=myData[myData$Subtable=="Employment sector",]
       ,aspect=1.1 # grafiko lentos aukstis dalintas is plocio
       ,main='Is your job professionally challenging?' # title
       ,ReferenceZero=3 # explicitly states the col number which is neutral. In case there is no neutral position, the reference is set like this: =2.5
@@ -75,6 +107,7 @@ likert(x=Question ~ . , data=ProfChal[ProfChal$Subtable=="Employment sector",]
                         ,axis.line=list(col="black") # the color of outside borders and ticks, e.g.: "transparent"
                         )
       ,sub="" #tekstas pacioje apacioje
+      ,panel=myPanelFunc
       )
 
 # When X labels are needed on top instead of bottom:
