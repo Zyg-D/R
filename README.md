@@ -1,3 +1,32 @@
+# SparkR
+
+**Create df**
+```r
+df <- data.frame(col1 = c("c1", "c2"),
+                 col2 = c(1, 2),
+                 col3 = c("c21", "c22"),
+                 col4 = c("c31", "c32"),
+                 col5 = c(2, 3))
+df <- as.DataFrame(df)
+
+showDF(df)
+# +----+----+----+----+----+
+# |col1|col2|col3|col4|col5|
+# +----+----+----+----+----+
+# |  c1| 1.0| c21| c31| 2.0|
+# |  c2| 2.0| c22| c32| 3.0|
+# +----+----+----+----+----+
+printSchema(df)
+# root
+# |-- col1: string (nullable = true)
+# |-- col2: double (nullable = true)
+# |-- col3: string (nullable = true)
+# |-- col4: string (nullable = true)
+# |-- col5: double (nullable = true)
+```
+
+
+
 # R
 
 **creating a data frame obj**
