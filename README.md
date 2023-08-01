@@ -1,5 +1,13 @@
 # R
 
+**creating a data frame obj**
+```r
+fakeddf = data.frame(col1 = c("c1", "c2"),
+                     col2 = c(1, 2),
+                     col3 = c("c21", "c22"),
+                     col4 = c("c31", "c32"),
+                     col5 = c(2, 3))
+```
 **Returning a sorted data frame on specified column**
 ```r
 Dataset[order(-Dataset$Age),]  #desc
@@ -62,14 +70,6 @@ G.test(data.xtabs)
 ```r
 library(diffobj)
 diffPrint(obj1, obj2)
-```
-**creating a data frame obj**
-```r
-fakeddf = data.frame(col1 = c("c1", "c2"),
-                     col2 = c(1, 2),
-                     col3 = c("c21", "c22"),
-                     col4 = c("c31", "c32"),
-                     col5 = c(2, 3))
 ```
 **Installing packages from github**
 ```r
